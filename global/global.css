@@ -1,0 +1,147 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "euclidflex";
+  src: url("../public/fonts/EuclidFlex-Regular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "euclidflex";
+  src: url("../public/fonts/EuclidFlex-Bold.otf");
+  font-weight: 800;
+  font-display: swap;
+}
+
+/* Global Styles */
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: euclidflex !important;
+}
+
+/* Checkboxes */
+
+.checkbox {
+  @apply rounded-lg
+}
+
+.checkbox {
+  width: 25px;
+  height: 23px;
+  -webkit-appearance:none;
+  border: 3px solid #0552fe;
+}
+
+.checkbox:checked {
+  background: #0552fe;
+}
+
+
+/* Day List */
+
+/* Bug fix #4 */
+/* Added to 3 new class for this issue then it fixed. */
+.days li {
+  @apply text-lg cursor-pointer w-max-170p overflow-x-hidden overflow-ellipsis rounded-l-md pl-7 text-left h-2-8-rem pt-2
+}
+
+.active {
+  text-decoration: underline;
+  font-weight: bolder;
+  color: #0552fe;
+}
+
+/* To Do List */
+
+.task-line .icons {
+  @apply opacity-0
+}
+
+.task-line:hover > .icons {
+  @apply opacity-100
+}
+
+#input-list::placeholder{
+  @apply italic 
+}
+
+@layer utilities {
+  /* Background Colors */
+  .bg-skyblue {
+    background-color: #f2f6ff;
+  }
+
+  .bg-skyblue-d {
+    background-color: #e4ecfe;
+  }
+
+  /* Box Shadows */
+  .shadow-skyblue {
+    box-shadow: 3px 3px 20px #2251f524;
+  }
+
+  /* Text Colors */
+  .text-muted {
+    color: #000031;
+  }
+
+  /* Sizing */
+  .w-662-p {
+    width: 662px
+  }
+
+  .w-max-170p {
+    max-width:170px
+  }
+
+  .h-28-p {
+    height: 28px;
+  }
+
+  .h-min-360-p {
+    min-height: 360px;
+  }
+  
+  .h-max-371-p {
+    max-height: 371px;
+  }
+
+  .h-min-371-p {
+    min-height: 371px;
+  }
+
+  .h-max-360-p {
+    max-height: 360px;
+  }
+
+  .h-2-8-rem {
+    height: 2.8rem
+  }
+
+  /* Spacing  */
+
+  .mt-40-p {
+    margin-top: 40px;
+  }
+
+  .mr-28-p {
+    margin-right: 28px;
+  }
+
+  .mt-17-p {
+    margin-top: 17px;
+  }
+
+  /* Text Colors */
+  .text-blue-smoothblue {
+    color: #0552fe;
+  }
+
+  .text-muted {
+    color: #000031
+  }
+
+}

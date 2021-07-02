@@ -1,16 +1,19 @@
 {
-  "name": "with-tailwindcss",
+  "name": "Uxactly-Task",
+  "description": "Dass uns der Weg am Ende des Tages wichtiger ist als das Ergebnis",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
+    "jsonwebtoken": "^8.5.1",
     "next": "latest",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.4",

@@ -1,23 +1,63 @@
-# Next.js + Tailwind CSS Example
+![uxactly banner](./master/uxactly-banner.png)
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) (v2.1) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+# **Uxactly Task**
 
-It uses the new [`Just-in-Time Mode`](https://tailwindcss.com/docs/just-in-time-mode) for Tailwind CSS.
+I was seriously fun when doing this task, I hope have fun when you reading my documentation.
 
-## Deploy your own
+## How does it work ?
+Let`s imagine, you are an average user.Every days have specifiy array for the todo list by current day and your current day is saving to state **day**.Whenever you want enter an input to input your input saving to state **todoList** and at the same time encoding to jsonwebtoken for the saving your list to your computer.Then your one task is done ! you check it so your task index is saving to state **completed** what you checked and of course saving to local storage like same scenario.Your every task is done and want to delete it when your maus is over task will appear two button but unfortunately just work delete button, when you click to delete button your task will delete by your task index from state **complate**.
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
+<br>
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
+![stateTree image](./master/stateTree.png)
+## My **stateTree** 
+I have a lot of state for this todo list. Becouse of this I compiled my states to one variable for **Context API**
+ 
+* **currentDay** <br>
+This state allocate the in which day you are. 
+* **todoList** <br>
+todoList state allocate your todolist elements.
+* **days** <br>
+Your days is in days state.
+* **complated** <br> 
+Whenever you pinned your tasks for done it will be save to this state.
+* **addToArray** <br>
+I noticed to have use this function for 2 - 3 times and I convert it to an state function for no code repeat.
+* **deletefromArray** <br>
+I noticed to have use this function for 2 - 3 times and I convert it to an state function for no code repeat.
 
-## How to use
+## What I Did For Storage
+I have used **useEffect** from React.js Hooks and set it to whenever her state is change.Its look like this.
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+![storage image](./master/storage.png)
 
-```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
-# or
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
+For whenever we refresh the page set our states from local storage, I called this function just for one time.
+
+![storage to state image](./master/storage-to-state.png)
+
+# How to install 
+```sh
+npm install && npm run build && npm start
 ```
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+## What I Used
+
+- [x] Next.js (latest)
+- [x] Tailwindcss (2.1.1)
+- [x] Postcss (^8.1.10)
+- [x] Jsonwebtoken (^8.5.1)
+- [x] Local Storage
+
+### Hooks in React.js
+
+- [x] Context API
+- [x] useState()
+- [x] useEffect()
+
+## Roadmap
+* 04.05.2021 | Thinked Design Layout.
+* 05.05.2021 | Complated Scripts and Styles.
+* 06.05.2021 | Compile My Codes. Writed a README.md Documentation.
+* 07.05.2021 | Deliver This Task to Herr Schulz.
+
+# Dass uns der Weg am Ende des Tages wichtiger ist als das Ergebnis 

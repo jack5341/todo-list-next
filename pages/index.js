@@ -1,82 +1,161 @@
-import Head from 'next/head'
+import Head from "next/head";
+import Images from "next/image";
+import jwt from "jsonwebtoken";
+import { useState, useEffect } from "react";
+
+// Components
+import LeftSide from "../components/layout-components/left-side";
+import Container from "../components/layout-components/container";
+import ListElement from "../components/shared-components/todolist-element";
+
+// Context APIs
+import { ListStore } from "../contexts/listStore";
 
 export default function Home() {
+  const [day, setday] = useState("Montag");
+  const [ischecked, setChecked] = useState(false);
+  const [list, setlist] = useState({
+    Montag: ["Hello Montag !", "Uxactly GmbH!"],
+    Dienstag: ["Hello Dienstag !"],
+    Mittwoch: [],
+    Donnerstag: [],
+    Freitag: [],
+    Samstag: [],
+    Sonntag: [],
+  });
+
+  const [complated, setComplated] = useState({
+    Montag: [],
+    Dienstag: [],
+    Mittwoch: [],
+    Donnerstag: [],
+    Freitag: [],
+    Samstag: [],
+    Sonntag: [],
+  });
+
+  useEffect(() => {
+    setlist(jwt.decode(window.localStorage.getItem("list")));
+    setComplated(jwt.decode(window.localStorage.getItem("complated")));
+  }, []);
+
+  const [days, setdays] = useState([
+    "Montag",
+    "Dienstag",
+    "Mittwoch",
+    "Donnerstag",
+    "Freitag",
+    "Samstag",
+    "Sonntag",
+  ]);
+
+  const stateTree = {
+    currentDay: [day, setday],
+    todoList: [list, setlist],
+    days: [days, setdays],
+    complated: [complated, setComplated],
+    addtoArray: (setarr, arr, day, input) => {
+      setarr({
+        ...arr,
+        [day]: [...arr[day], input],
+      });
+    },
+    deletefromArray: (setarr, arr, day, input) => {
+      const reducedArr = [...arr[day]];
+      reducedArr.splice(input ? reducedArr.indexOf(input) : 0, 1);
+      setarr({
+        ...arr,
+        [day]: [...reducedArr],
+      });
+    },
+  };
+
+  useEffect(() => {
+    window.localStorage.setItem("list", jwt.sign(list, "shhhhh"));
+    window.localStorage.setItem("complated", jwt.sign(complated, "shhhhh"));
+  }, [list, complated]);
+
+  const keywordOfArray = list
+    ? Object.keys(list).findIndex((e) => e === day)
+    : null;
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
+    <ListStore.Provider value={stateTree}>
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>Todo - {day} </title>
       </Head>
+      <Container>
+        <div className="flex h-screen justify-center items-center">
+          <div className="grid shadow-skyblue grid-cols-4 rounded-xl">
+            <LeftSide />
+            <div className="col-span-3 -ml-5 bg-white w-662-p rounded-xl p-10 py-0 shadow-skyblue">
+              <div className="flex my-4 flex-col">
+                <p className="text-4xl font-bold mt-4"> {day} </p>
+                <div className="p-3 h-min-360-p h-max-360-p mt-17-p overflow-auto">
+                  {list
+                    ? Object.values(list)[keywordOfArray].map((e, key) => (
+                        <ListElement
+                          day={day}
+                          key={key}
+                          index={key}
+                          label={e}
+                        />
+                      ))
+                    : null}
+                  <p className="text-blue-smoothblue text-sm mt-1 ml-1 cursor-pointer">
+                    > Complated {complated ? [complated[day]][0].length : null}
+                  </p>
+                </div>
+                <form
+                  onSubmit={async (e) => {
+                    // Bug Fix #1
+                    e.preventDefault();
+                    // Reconstruct for the push an element to state
+                    if (document.getElementById("input-list").value) {
+                      stateTree.addtoArray(
+                        setlist,
+                        list,
+                        day,
+                        document.getElementById("input-list").value
+                      );
 
-      <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{' '}
-          <a className="text-blue-600" href="https://nextjs.org">
-            Next.js!
-          </a>
-        </h1>
-
-        <p className="mt-3 text-2xl">
-          Get started by editing{' '}
-          <code className="p-3 font-mono text-lg bg-gray-100 rounded-md">
-            pages/index.js
-          </code>
-        </p>
-
-        <div className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Learn &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Examples &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+                      ischecked
+                        ? stateTree.addtoArray(
+                            setComplated,
+                            complated,
+                            day,
+                            list[day].length
+                          )
+                        : stateTree.deletefromArray(
+                            setComplated,
+                            complated,
+                            day,
+                            list[day].length
+                          );
+                      document.getElementById("input-list").value = "";
+                    }
+                    return null;
+                  }}
+                  className="flex mt-8"
+                >
+                  <input
+                    type="checkbox"
+                    id="input-checkbox"
+                    onChange={() => setChecked(!ischecked)}
+                    className="mr-28-p checkbox"
+                  />{" "}
+                  <input
+                    type="text"
+                    id="input-list"
+                    className="border-b focus:outline-none pb-2 w-full"
+                    placeholder="Was willst du machen?"
+                  />  
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
-
-      <footer className="flex items-center justify-center w-full h-24 border-t">
-        <a
-          className="flex items-center justify-center"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="h-4 ml-2" />
-        </a>
-      </footer>
-    </div>
-  )
+      </Container>
+    </ListStore.Provider>
+  );
 }
